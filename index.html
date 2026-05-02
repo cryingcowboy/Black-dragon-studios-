@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Black Dragons Studios</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: black;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* PARTICULAS */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* HEADER */
+header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* GLITCH EFFECT */
+.glitch {
+    font-size: 4rem;
+    font-family: 'Orbitron';
+    color: red;
+    position: relative;
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 2px red; }
+    25% { text-shadow: -2px 0 blue; }
+    50% { text-shadow: 2px -2px red; }
+    75% { text-shadow: -2px 2px blue; }
+    100% { text-shadow: 2px 2px red; }
+}
+
+.subtitle {
+    margin-top: 10px;
+    color: #ccc;
+}
+
+/* BOTAO */
+.btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    border: none;
+    background: red;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    box-shadow: 0 0 20px red;
+    transform: scale(1.05);
+}
+
+/* SECTIONS */
+section {
+    padding: 80px 10%;
+}
+
+h2 {
+    color: red;
+    font-family: 'Orbitron';
+    margin-bottom: 20px;
+}
+
+/* CARDS */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #111;
+    padding: 20px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px red;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #000;
+    color: #777;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<header>
+    <h1 class="glitch">BLACK DRAGONS STUDIOS</h1>
+    <p class="subtitle">Criando jogos diversos com a mesma profissionalidade</p>
+    <button class="btn" onclick="scrollToSection()">Ver Jogos</button>
+</header>
+
+<section>
+    <h2>Sobre Nós</h2>
+    <p>
+        Somos um estúdio focado na criação de experiências únicas.
+        Trabalhamos com diversos estilos de jogos, sempre mantendo
+        o mesmo nível de qualidade, dedicação e profissionalismo.
+    </p>
+</section>
+
+<section id="games">
+    <h2>Nossos Jogos</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>HELLTRENCHES</h3>
+            <p>Guerra, inferno e máquinas colossais.</p>
+        </div>
+        <div class="card">
+            <h3>Projeto Futuro</h3>
+            <p>Em desenvolvimento...</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Equipe</h2>
+    <div class="grid">
+        <div class="card"><h3>Jhonatan</h3><p>Programador Principal</p></div>
+        <div class="card"><h3>Gustavo</h3><p>Personagens & Lore</p></div>
+        <div class="card"><h3>Saulo</h3><p>Soundtracks</p></div>
+        <div class="card"><h3>Erick</h3><p>Auxiliar de Programação</p></div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Black Dragons Studios</p>
+</footer>
+
+<!-- MUSICA -->
+<audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6f0e9c4f0d.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function scrollToSection() {
+    document.getElementById("games").scrollIntoView({behavior: "smooth"});
+}
+
+/* PARTICULAS */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i = 0; i < 100; i++){
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2,
+        speedY: Math.random() * 1
+    });
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "red";
+
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        p.y += p.speedY;
+
+        if(p.y > canvas.height) p.y = 0;
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
